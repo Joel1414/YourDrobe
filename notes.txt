@@ -1,0 +1,2 @@
+Use 'expo-image-picker' to allow users to pick images from their camera roll.
+If you want users to capture new images, consider using 'expo-camera'.
