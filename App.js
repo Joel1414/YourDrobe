@@ -17,7 +17,6 @@ export default function App() {
         tabBarStyle: { backgroundColor: '#1E1E1E' },
         activeTintColor: '#AAA', 
         inactiveTintColor: '#AAA',
- 
 
       }}
       >
@@ -50,6 +49,7 @@ export default function App() {
             ),
           }}
         />
+
       </Tab.Navigator>
     </NavigationContainer>
 
