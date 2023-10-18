@@ -1,10 +1,10 @@
 
 import Outfit from './pages/Outfit';
 import Settings from './pages/Settings';
-import Waredrobe from './pages/Wardrobe';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
+import Wardrobe from "./pages/Wardrobe";
 const Tab = createBottomTabNavigator();
 
 export default function App() {
@@ -40,9 +40,9 @@ export default function App() {
           }}
         />
 
-        <Tab.Screen 
-          name="Waredrobe" 
-          component={Waredrobe}
+        <Tab.Screen
+            name="Waredrobe"
+            component={Wardrobe}
           options={{
             tabBarIcon: ({ color, size }) => (
               <Image source={require('./icons/Icon_Hanger.png')} style={{ width: size, height: size, tintColor: color }} />

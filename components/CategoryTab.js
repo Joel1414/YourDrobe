@@ -3,10 +3,10 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from '../styles';
 
 const ICONS = {
-  Tops: require('../bigIcons/Tops.png'),
-  Bottoms: require('../bigIcons/Bottoms.png'),
-  Accessories: require('../bigIcons/Accessories.png'),
-  Shoes: require('../bigIcons/Shoes.png'),
+    Tops: require('../bigIcons/T-Shirt.png'),
+    Bottoms: require('../bigIcons/Trousers.png'),
+    Accessories: require('../bigIcons/CountryHat.png'),
+    Shoes: require('../bigIcons/Sneakers.png'),
 };
 
 const CategoryTab = ({ category, onPress }) => {
