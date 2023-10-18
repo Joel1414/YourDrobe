@@ -1,0 +1,11 @@
+# JetBrains IDE
+.idea/
+
+# Node.js dependencies
+node_modules/
+
+# Expo files
+.expo/
+
+# Custom files
+active.uusver
