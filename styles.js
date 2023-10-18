@@ -95,7 +95,38 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 
-  
+  toggleGroup: {
+    flex: 1,
+    justifyContent: 'center', // this centers the children vertically
+    alignItems: 'center', // this centers the children horizontally
+  },
+
+  toggleContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: 20,
+    paddingVertical: 30,
+    borderWidth: 1,
+    borderColor: 'gray', // or any desired separator color
+    width: '90%',
+    marginVertical: 10,
+    borderRadius: 15,
+    backgroundColor: 'rgba(30, 34, 53, 1)',
+  },
+  textContainer: {
+    maxWidth: '75%' // ensures there's room for the switch
+  },
+  title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white'
+  },
+  description: {
+    marginTop: 5,
+    fontSize: 14,
+    color: 'white'
+  }
 
 });
 
