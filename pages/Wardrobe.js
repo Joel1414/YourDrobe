@@ -44,7 +44,7 @@ const Wardrobe = () => {
       {!cameraOpen ? (
         <>
           <TouchableOpacity style={styles.addButton} onPress={openCamera}>
-            <Image source={require('../bigIcons/Plus2.png')} style={{ width: 100, height: 100 }} />
+            <Image source={require('../bigIcons/Plus2.png')} style={{width: 70, height: 70}}/>
           </TouchableOpacity>
           {photo && <Image source={{ uri: photo }} style={{ width: 100, height: 100 }} />}
         </>
