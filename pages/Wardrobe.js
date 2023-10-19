@@ -4,6 +4,7 @@ import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import styles from '../styles';
 import CategoryTab from '../components/CategoryTab';
+import Item from '../pages/Item';
 
 const Wardrobe = () => {
   const [cameraOpen, setCameraOpen] = useState(false);
@@ -22,9 +23,15 @@ const Wardrobe = () => {
 
   const takePicture = async () => {
     if (cameraRef) {
-      const photoData = await cameraRef.takePictureAsync();
-      setPhoto(photoData.uri);
+      const photoData = await cameraRef.takePictureAsync({base64: true});
       setCameraOpen(false);
+
+      // console.log("Making Item - Base64: ", photoData.base64);
+      const item = new Item("FirstUpload.jpg", photoData.base64);
+      console.log("Attempting To Upload!");
+      await item.uploadToS3();
+      console.log("Done Uploading.");
+
     }
   };
 
