@@ -31,7 +31,7 @@ class Item {
         } catch (error) {
             console.error('Error uploading to S3:', error);
         }
-        await this.removeBackground()
+        // await this.removeBackground()
     }
 
     removeBackground = async () => {
