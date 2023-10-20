@@ -27,6 +27,13 @@ class Item {
             }).promise();
 
             console.log('Successfully uploaded image to S3:', response);
+            const url = s3.getSignedUrl('getObject', {
+                Bucket: 'yourdrobe-items',
+                Key: this.name,
+                Expires: 60 * 5 // URL will be valid for 5 minutes
+            });
+
+            console.log(url);
         } catch (error) {
             console.error('Error uploading to S3:', error);
         }
