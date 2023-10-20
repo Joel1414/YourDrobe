@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     position: 'absolute',
     bottom: 50,
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -126,7 +126,45 @@ const styles = StyleSheet.create({
     marginTop: 5,
     fontSize: 14,
     color: 'white'
-  }
+  },
+
+  closeCameraButton: {
+    position: 'absolute',
+    top: 50,
+    left: 20,
+    padding: 10,
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    borderRadius: 5
+  },
+  
+  closeButtonText: {
+    fontSize: 16,
+    color: '#000'
+  },
+
+  weatherContainer: {
+    position: 'absolute',
+    width: 200,
+    top: '10%',
+    right: '10%',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(255,255,255,0.5)',
+    borderRadius: 20
+  },
+
+  weatherButton: {
+    position: 'absolute',
+    top: '5%',
+    right: '10%',
+    padding: 10,
+    borderRadius: 5,
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  
 
 });
 

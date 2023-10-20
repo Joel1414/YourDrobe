@@ -44,7 +44,7 @@ const Wardrobe = () => {
       {!cameraOpen ? (
         <>
           <TouchableOpacity style={styles.addButton} onPress={openCamera}>
-            <Image source={require('../bigIcons/Plus2.png')} style={{width: 70, height: 70}}/>
+            <Image source={require('../bigIcons/Plus2.png')} style={{ width: 100, height: 100 }} />
           </TouchableOpacity>
           {photo && <Image source={{ uri: photo }} style={{ width: 100, height: 100 }} />}
         </>
@@ -55,6 +55,13 @@ const Wardrobe = () => {
         type={Camera.Constants.Type.back}
       >
         <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 20 }}>
+          <TouchableOpacity 
+            onPress={() => setCameraOpen(false)} 
+            style={styles.closeCameraButton}
+          >
+            <Text style={styles.closeButtonText}>Close</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity onPress={takePicture} style={{
             width: 70,
             height: 70,
