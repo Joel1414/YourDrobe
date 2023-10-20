@@ -7,6 +7,7 @@ const API_KEY = "5fbd4f888cc555b162748e6e02814f39";
 
 const Outfit = () => {
   const [weatherData, setWeatherData] = useState(null);
+  const [weatherData2, setWeatherData2] = useState(null);
   const [error, setError] = useState(null);
   const [showWeather, setShowWeather] = useState(false);
 
@@ -14,8 +15,9 @@ const Outfit = () => {
     try {
       const response = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}`);
       const data = await response.json();
-      if (data && data.main) {
+      if (data && data.main && data.weather) {
         setWeatherData(data.main);
+        setWeatherData2(data.weather[0]);
         setShowWeather(true); 
       }
     } catch (err) {
@@ -58,11 +60,12 @@ const Outfit = () => {
         <Image source={require('../icons/cloud.png')} style={{ width: 50, height: 50 }}/>
       </TouchableOpacity>
 
-      {showWeather && weatherData && (
+      {showWeather && weatherData && weatherData2 && (
         <View style={styles.weatherContainer}>
-          <Text>Temperature: {weatherData.temp}°K</Text>
+          <Text>Temperature: {Math.round(weatherData.temp - 274.15)}°C</Text>
           <Text>Humidity: {weatherData.humidity}%</Text>
           <Text>Pressure: {weatherData.pressure} hPa</Text>
+          <Text>Weather: {weatherData2.description}</Text>
         </View>
       )}
 
