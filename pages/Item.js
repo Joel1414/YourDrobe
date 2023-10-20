@@ -24,18 +24,49 @@ class Item {
                 Key: this.name,
                 Body: binaryData,
                 ContentType: 'image/jpeg', // Or whichever format the image is in
+                ACL: "public-read",
             }).promise();
+            console.log("Succesfully uploaded: ", response)
 
-            console.log('Successfully uploaded image to S3:', response);
-            const url = s3.getSignedUrl('getObject', {
-                Bucket: 'yourdrobe-items',
-                Key: this.name,
-                Expires: 60 * 5 // URL will be valid for 5 minutes
-            });
-
-            console.log(url);
         } catch (error) {
             console.error('Error uploading to S3:', error);
+        }
+        await this.removeBackground()
+    }
+
+    removeBackground = async () => {
+        const region = 'ap-southeast-2';
+        const bucketName = 'yourdrobe-items';
+
+        const imageUrl = `https://s3.${region}.amazonaws.com/${bucketName}/${this.name}`;
+
+        console.log("imageURL: ", imageUrl);
+
+        const photoRoomUrl = 'https://beta-sdk.photoroom.com/v1/render?templateId=aa816f82-7061-458a-9b13-3d2c8c63b1bf&imageUrl=' + imageUrl;
+        console.log("photoRoomURL: ", photoRoomUrl)
+        const options = {
+            method: 'GET',
+            headers: {
+                Accept: 'image/png, application/json',
+                'x-api-key': '8c69eeaa885fa78a49a4c40f4a0218161f1d7f03'
+            }
+        };
+
+        try {
+            const photoRoomResponse = await fetch(photoRoomUrl, options);
+            console.log("Successfully Outlined Image");
+            const outlinedImageBlob = await photoRoomResponse.blob()
+            const response = await s3.putObject({
+                Bucket: 'yourdrobe-items',
+                Key: "Outlined.jpg",
+                Body: outlinedImageBlob,
+                ContentType: 'image/jpeg', // Or whichever format the image is in
+                ACL: "public-read",
+            }).promise();
+            console.log("Successfully uploaded: ", response)
+
+        } catch (error) {
+            console.error(error);
         }
     }
 }
