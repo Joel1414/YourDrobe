@@ -69,6 +69,52 @@ class Item {
             console.error(error);
         }
     }
+    getImageFromS3 = async () => {
+        const params = {
+            Bucket: "yourdrobe-items",
+            Key: "bucket_hat.png"        //TODO: Change to this.name after testing
+        };
+
+        return new Promise((resolve, reject) => {
+            s3.getObject(params, (err, data) => {
+                if (err) reject(err);
+                else resolve(data.Body);
+            });
+        });
+    }
+
+    fetchGoogleVisionLabels = async (base64Image) => {
+
+        const visionApiKey = "AIzaSyCsFOFyouaN-l9IDyOSHtJKaB3uzUBWrdw"
+        const GOOGLE_CLOUD_VISION_API_ENDPOINT = `https://vision.googleapis.com/v1/images:annotate?key=` + visionApiKey;
+        const body = JSON.stringify({
+            requests: [
+                {
+                    image: {
+                        content: base64Image.toString('base64'),
+                    },
+                    features: [
+                        {type: "LABEL_DETECTION", maxResults: 30},
+                    ],
+                },
+            ],
+        });
+
+        const response = await fetch(GOOGLE_CLOUD_VISION_API_ENDPOINT, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body,
+        });
+        console.log("Response Received")
+        const responseJson = await response.json();
+        if (responseJson && responseJson.responses && responseJson.responses[0]) {
+            return responseJson.responses[0].labelAnnotations.map(label => label.description);
+        }
+
+        throw new Error('Unable to fetch labels from Vision API');
+    }
 }
 
 export default Item;
