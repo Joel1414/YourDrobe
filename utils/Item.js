@@ -1,6 +1,22 @@
 import AWS from 'aws-sdk';
 import {Buffer} from 'buffer';
 import {possibleLabels, types} from './Constants.js';
+import {initializeApp} from "firebase/app";
+import {getFirestore, collection, addDoc} from "@firebase/firestore";
+
+const firebaseConfig = {
+    apiKey: "AIzaSyBUIkClHP7DYf1yO8b6_z6EfpD3CQ6s97s",
+    authDomain: "yourdrobe-fd89a.firebaseapp.com",
+    databaseURL: "https://yourdrobe-fd89a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "yourdrobe-fd89a",
+    storageBucket: "yourdrobe-fd89a.appspot.com",
+    messagingSenderId: "877224895321",
+    appId: "1:877224895321:web:7495f1e2f054a871fea248",
+    measurementId: "G-XNQ53VKLPP"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
 
 AWS.config.update({
@@ -182,6 +198,23 @@ class Item {
         this.labels = all_labels || [];
     }
 
+    uploadItemToDatabase = async () => {
+        const data = {
+            name: this.name,
+            type: this.clothingType,
+            minTemp: this.minTemp,
+            maxTemp: this.maxTemp,
+            labels: this.labels,
+            weatherLabels: this.weatherLabels,
+            styleLabels: this.styleLabels,
+        };
+        try {
+            const docRef = await addDoc(collection(db, "items"), data);
+            console.log("Document written with ID: ", docRef.id);
+        } catch (error) {
+            console.error("Error adding document: ", error);
+        }
+    }
 
 }
 
