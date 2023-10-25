@@ -4,7 +4,7 @@ import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import styles from '../styles';
 import CategoryTab from '../components/CategoryTab';
-import Item from '../pages/Item';
+import Item from '../utils/Item';
 import ConfirmPhoto from './ConfirmPhoto'; 
 import LabelPage from './LabelPage'; // Importing the LabelPage component
 import ClothingList from '../components/ClothingList'; // Importing the ClothingList component
