@@ -5,8 +5,9 @@ import * as Permissions from 'expo-permissions';
 import styles from '../styles';
 import CategoryTab from '../components/CategoryTab';
 import Item from '../utils/Item';
-import ConfirmPhoto from './ConfirmPhoto'; 
-import LabelPage from './LabelPage'; // Importing the LabelPage component
+import ConfirmPhoto from './ConfirmPhoto';
+import LabelPage from './LabelPage';
+import {Outfit} from "../utils/Outfit"; // Importing the LabelPage component
 import ClothingList from '../components/ClothingList'; // Importing the ClothingList component
 
 const Wardrobe = () => {
@@ -70,7 +71,7 @@ const Wardrobe = () => {
     const handleTabPress = (category) => {
       setActiveCategory(category);
    };
-   
+
 
     let cameraRef;
 
@@ -115,12 +116,12 @@ const Wardrobe = () => {
                     </TouchableOpacity>
                 </>
             ) : activeCategory ? ( // Condition to check if activeCategory is set
-                <ClothingList 
-                  categoryTitle={activeCategory} 
-                  items={itemsForCategory[activeCategory]} 
+                <ClothingList
+                  categoryTitle={activeCategory}
+                  items={itemsForCategory[activeCategory]}
                   onExit={() => setActiveCategory(null)}
                 />
-    
+
             ) : (
                 <Camera 
                     ref={ref => (cameraRef = ref)}
