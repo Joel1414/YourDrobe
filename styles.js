@@ -25,9 +25,7 @@ const styles = StyleSheet.create({
     height: 60,
     marginRight: 10
   },
-  itemText: {
-    color: '#FFF'
-  },
+
 
   generateButton: {
     backgroundColor: 'rgba(112, 191, 157, 1)', 
@@ -165,7 +163,139 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   
+  itemText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#FFF',
+    marginBottom: 20,
+    alignSelf: 'center',
+    position: 'absolute',
+    top: 150,
+    left: 100,
+  },
 
+  exitButton: {
+    position: 'absolute',
+    top: 20,
+    left: 20,
+  },
+  exitIcon: {
+    width: 50,
+    height: 50
+  },
+  itemText: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    color: 'white',
+    marginBottom: 20,
+  },
+  photo: {
+    width: 300,
+    height: 350,
+    borderRadius: 20,
+    padding: 200,
+    marginTop: 50
+  },
+
+  reCaptureButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'center',
+    width: '40%',
+    height: 40,
+    backgroundColor: 'rgba(44, 48, 66, 1)',
+    borderRadius: 30,
+    marginTop: 20,
+    padding: 10,
+  },
+
+  reCaptureIcon: {
+    width: 30,
+    height: 30,
+
+  },
+
+  input: {
+    padding: 10,
+    width: '80%',
+    marginTop: 20,
+    backgroundColor: 'rgba(33, 37, 56, 1)',
+    borderRadius: 20,
+    color: 'white',
+  },
+
+
+  labelContainer: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+},
+
+label: {
+    backgroundColor: '#333333',
+    borderRadius: 15,
+    padding: 10,
+    margin: 5,
+},
+
+labelSelected: {
+    backgroundColor: '#4B99A9',
+    borderRadius: 20,
+    paddingHorizontal: 15,
+    paddingVertical: 10,
+    marginRight: 10,
+},
+labelText: {
+    color: '#FFFFFF',
+},
+doneButton: {
+    backgroundColor: '#4B99A9',
+    borderRadius: 20,
+    padding: 15,
+    width: '40%',
+    alignItems: 'center',
+},
+
+doneButton2: {
+  backgroundColor: '#4B99A9',
+  borderRadius: 20,
+  padding: 15,
+  width: '40%',
+  alignItems: 'center',
+  position: 'relative',
+  bottom: 20,
+},
+
+doneButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+},
+
+headerText: {
+  fontSize: 18,
+  color: '#FFFFFF',
+  marginBottom: 10,
+},
+
+photo2: {
+  width: 175,
+  height: 225,
+  borderRadius: 20,
+  padding: 130,
+  marginTop: 50
+},
+
+imageNameText: {
+  fontSize: 20,
+  color: '#FFFFFF',
+  marginVertical: 20,
+  position: 'relative', 
+  top: 60,
+  right: '20%'
+},
 });
+
+
+
 
 export default styles;
