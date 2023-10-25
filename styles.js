@@ -5,6 +5,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'rgba(2, 9, 36, 1)', 
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   header: {
     fontSize: 28,
@@ -34,7 +36,7 @@ const styles = StyleSheet.create({
     alignSelf: 'center',
     marginBottom: 20,
     position: 'absolute',
-    bottom: 50,
+    bottom: 10,
     width: 200,
     height: 50,
     alignItems: 'center',
@@ -42,7 +44,9 @@ const styles = StyleSheet.create({
   },
   generateButtonText: {
     color: '#FFF',
-    fontSize: 18
+    fontSize: 18,
+    fontWeight: 'bold'
+    
   },
 
   addButton: {
@@ -61,7 +65,6 @@ const styles = StyleSheet.create({
 
   tabsContainer: {
     backgroundColor: 'rgba(16, 25, 44, 1)',
-    top: '40%',
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
@@ -70,6 +73,7 @@ const styles = StyleSheet.create({
     marginTop: 20,
     borderRadius: 10,
     padding: 20,
+    bottom: 50,
 },
 
   tabContainer: {
@@ -107,7 +111,9 @@ const styles = StyleSheet.create({
     paddingVertical: 30,
     borderWidth: 1,
     borderColor: 'gray', // or any desired separator color
-    width: '90%',
+    maxWidth: '90%',
+    minWidth: '90%',
+
     marginVertical: 10,
     borderRadius: 15,
     backgroundColor: 'rgba(30, 34, 53, 1)',
@@ -217,8 +223,9 @@ const styles = StyleSheet.create({
 
   input: {
     padding: 10,
-    width: '80%',
+    width: 200,
     marginTop: 20,
+    marginBottom: 20,
     backgroundColor: 'rgba(33, 37, 56, 1)',
     borderRadius: 20,
     color: 'white',
@@ -229,6 +236,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
+    backgroundColor: 'rgba(30, 34, 53, 1)',
+    alignItems: 'center',
+    maxHeight: 50,
+    borderRadius: 20
 },
 
 label: {
@@ -236,6 +247,7 @@ label: {
     borderRadius: 15,
     padding: 10,
     margin: 5,
+    marginLeft: 10,
 },
 
 labelSelected: {
@@ -244,23 +256,25 @@ labelSelected: {
     paddingHorizontal: 15,
     paddingVertical: 10,
     marginRight: 10,
+    marginLeft: 10,
 },
 labelText: {
     color: '#FFFFFF',
 },
 doneButton: {
-    backgroundColor: '#4B99A9',
+    backgroundColor: 'rgba(112, 191, 157, 1)',
     borderRadius: 20,
     padding: 15,
-    width: '40%',
+    width: 200,
     alignItems: 'center',
+    top: 50,
 },
 
 doneButton2: {
-  backgroundColor: '#4B99A9',
+  backgroundColor: 'rgba(112, 191, 157, 1)',
   borderRadius: 20,
   padding: 15,
-  width: '40%',
+  width: 200,
   alignItems: 'center',
   position: 'relative',
   bottom: 20,
@@ -268,7 +282,8 @@ doneButton2: {
 
 doneButtonText: {
     color: '#FFFFFF',
-    fontSize: 16,
+    fontSize: 20,
+    fontWeight: 'bold',
 },
 
 headerText: {
@@ -293,6 +308,56 @@ imageNameText: {
   top: 60,
   right: '20%'
 },
+
+outfitItemContainer: {
+  flexDirection: 'row',      // To align image, text, and icons horizontally
+  alignItems: 'center',      // To vertically center everything in the row
+  padding: 10,
+  borderWidth: 1,     // Adds a line below each item for separation
+  borderColor: '#d3d3d3',  // Color of the separation line
+  margin: 10,          // Margin at the bottom of each item
+  backgroundColor: 'rgba(39, 43, 60, 1)',
+  borderRadius: 20,
+},
+
+outfitItemInnerContainer : {
+  flexDirection: 'column',
+  alignItems: 'center',
+  flex: 1,
+},
+
+outfitItemImage: {
+  width: 120,     
+  height: 120,    
+  marginRight: 10, 
+  backgroundColor: 'rgb(54, 57, 74)',
+  borderRadius: 20,
+},
+
+outfitItemText: {
+  flex: 1,       
+  fontSize: 22,
+  fontWeight: 'bold',
+  color: '#FFF',
+  top: 10,
+
+},
+
+outfitIconContainer: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  bottom: 20,
+  
+},
+
+outfitItemInfoIcon: {
+  width: 40,     
+  height: 40,   
+  marginLeft: 10, 
+},
+
+
+
 });
 
 

@@ -2,8 +2,17 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from '../styles';
 import * as Location from 'expo-location';
+import OutfitItem from '../components/OutfitItem'; 
 
 const API_KEY = "5fbd4f888cc555b162748e6e02814f39"; 
+
+const sampleOutfits = [
+  { itemName: 'Grey Thrills Cap', itemImage: require('../icons/Icon_Capture.png') },
+  { itemName: 'White Sams Shirt', itemImage: require('../icons/Icon_Refresh.png') },
+  { itemName: 'Grey Thrills Cap', itemImage: require('../icons/Icon_Capture.png') },
+  { itemName: 'White Sams Shirt', itemImage: require('../icons/Icon_Refresh.png') },
+  // ... add more items
+];
 
 const Outfit = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -52,6 +61,15 @@ const Outfit = () => {
     <View style={styles.container}>
       <Text style={styles.header}>Today's Outfit</Text>
       
+      {sampleOutfits.map((outfit, index) => (
+        <OutfitItem 
+          key={index} 
+          itemName={outfit.itemName} 
+          itemImage={outfit.itemImage} 
+          Press={() => console.log(`${outfit.itemName}`)} 
+        />
+      ))}
+
       <TouchableOpacity style={styles.generateButton}>
         <Text style={styles.generateButtonText}>Generate Outfit</Text>
       </TouchableOpacity>

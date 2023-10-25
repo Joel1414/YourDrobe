@@ -89,7 +89,7 @@ const Wardrobe = () => {
             ) : (
                 <Camera 
                     ref={ref => (cameraRef = ref)}
-                    style={{ flex: 1, height: '100%' }}
+                    style={{ flex: 1, height: '100%', width: '100%' }}
                     type={Camera.Constants.Type.back}
                 >
                     <View style={{ flex: 1, justifyContent: 'flex-end', alignItems: 'center', paddingBottom: 20 }}>
