@@ -46,8 +46,22 @@ const Wardrobe = () => {
 
     const handleDone = async (item) => {
         console.log("Attempting To Upload!");
-        await item.uploadToS3(); // Assuming the uploadToS3 function is in the Item class
+        // await item.uploadToS3(); // Assuming the uploadToS3 function is in the Item class
         console.log("Done Uploading.");
+
+        // TODO Remove me: used for testing
+        const uploadItem = new Item("bucket_hat", null)
+
+        console.log("Getting labels...",)
+        await uploadItem.setLabels()
+        console.log("Labels: ", uploadItem.labels)
+        console.log("Weather Labels: ", uploadItem.weatherLabels)
+        console.log("Style Labels: ", uploadItem.styleLabels)
+        console.log("Labeling Complete!")
+        console.log("Attempting to save item to db...")
+        await uploadItem.uploadItemToDatabase()
+        console.log("I really hope this is uploaded")
+
         setShowLabelPage(false);
         setPhoto(null);
         setPhotoName(null);
