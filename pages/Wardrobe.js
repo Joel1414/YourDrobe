@@ -5,8 +5,9 @@ import * as Permissions from 'expo-permissions';
 import styles from '../styles';
 import CategoryTab from '../components/CategoryTab';
 import Item from '../utils/Item';
-import ConfirmPhoto from './ConfirmPhoto'; 
-import LabelPage from './LabelPage'; // Importing the LabelPage component
+import ConfirmPhoto from './ConfirmPhoto';
+import LabelPage from './LabelPage';
+import {Outfit} from "../utils/Outfit"; // Importing the LabelPage component
 
 const Wardrobe = () => {
     const [cameraOpen, setCameraOpen] = useState(false);
@@ -51,7 +52,10 @@ const Wardrobe = () => {
         console.log("Labeling Complete!")
         console.log("Attempting to save item to db...")
         await uploadItem.uploadItemToDatabase()
-        console.log("I really hope this is uploaded")
+        console.log("Attempting to save item to db...")
+        const outfit = new Outfit()
+        await outfit.getItemsWithLabel("Hat")
+        console.log("Done!!!")
 
         setShowLabelPage(false);
         setPhoto(null);
