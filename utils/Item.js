@@ -2,6 +2,7 @@ import AWS from 'aws-sdk';
 import {Buffer} from 'buffer';
 import {possibleLabels, types} from './Constants.js';
 
+
 AWS.config.update({
     region: 'ap-southeast-2', // e.g., 'us-west-1'
     accessKeyId: 'AKIAR22UWHU2WAW72GLE',
@@ -74,7 +75,7 @@ class Item {
     getImageFromS3 = async () => {
         const params = {
             Bucket: "yourdrobe-items",
-            Key: "burks.png"        //TODO: Change to this.name after testing
+            Key: (this.name + ".png")        //TODO: Change to this.name after testing
         };
 
         return new Promise((resolve, reject) => {
@@ -118,11 +119,17 @@ class Item {
         throw new Error('Unable to fetch labels from Vision API');
     }
 
-    getLabels = async () => {
+    setLabels = async () => {
         const assignedLabels = await this.fetchGoogleVisionLabels()
         let all_labels = [];
-        let extraLabelsIncluded = false;
+        let checkedLabels = 0;
         for (let lbl of assignedLabels) {
+            if (possibleLabels.hasOwnProperty(lbl)) {
+                if (checkedLabels > 2) {
+                    break;
+                }
+                checkedLabels += 1;
+            }
             while (possibleLabels.hasOwnProperty(lbl)) {
                 // Don't re-add label that is already in
                 if (all_labels.includes(lbl)) {
@@ -141,15 +148,21 @@ class Item {
                     this.maxTemp = lbl_info.maxTemp;
                 }
 
-                // Add label to list of labels
-                all_labels.push(lbl);
-                if (!extraLabelsIncluded) {
-                    const additionalLabels = lbl_info.weatherLabels.concat(lbl_info.otherLabels);
-                    for (let extra_label of additionalLabels) {
+                // Check Weather Labels
+                if (this.weatherLabels == null) {
+                    this.weatherLabels = lbl_info.weatherLabels || [];
+                }
+
+                // Check Other Labels
+                if (this.styleLabels == null) {
+                    this.styleLabels = lbl_info.styleLabels || [];
+                    for (const extra_label of this.styleLabels) {
                         !all_labels.includes(extra_label) && all_labels.push(extra_label);
                     }
-                    extraLabelsIncluded = true;
                 }
+
+                // Add label to list of labels
+                all_labels.push(lbl);
 
                 lbl = lbl_info.parentLabel;
 
@@ -166,8 +179,10 @@ class Item {
         console.log("Min Temp: ", this.minTemp);
         console.log("Max Temp: ", this.maxTemp);
         console.log(all_labels);
-        return all_labels;
+        this.labels = all_labels || [];
     }
+
+
 }
 
 export default Item;
