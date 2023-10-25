@@ -1,5 +1,6 @@
 import AWS from 'aws-sdk';
 import {Buffer} from 'buffer';
+import {possibleLabels, types} from './Constants.js';
 
 AWS.config.update({
     region: 'ap-southeast-2', // e.g., 'us-west-1'
@@ -69,10 +70,11 @@ class Item {
             console.error(error);
         }
     }
+
     getImageFromS3 = async () => {
         const params = {
             Bucket: "yourdrobe-items",
-            Key: "bucket_hat.png"        //TODO: Change to this.name after testing
+            Key: "burks.png"        //TODO: Change to this.name after testing
         };
 
         return new Promise((resolve, reject) => {
@@ -83,15 +85,15 @@ class Item {
         });
     }
 
-    fetchGoogleVisionLabels = async (base64Image) => {
-
+    fetchGoogleVisionLabels = async () => {
+        const imageBuffer = await this.getImageFromS3()
         const visionApiKey = "AIzaSyCsFOFyouaN-l9IDyOSHtJKaB3uzUBWrdw"
         const GOOGLE_CLOUD_VISION_API_ENDPOINT = `https://vision.googleapis.com/v1/images:annotate?key=` + visionApiKey;
         const body = JSON.stringify({
             requests: [
                 {
                     image: {
-                        content: base64Image.toString('base64'),
+                        content: imageBuffer.toString('base64'),
                     },
                     features: [
                         {type: "LABEL_DETECTION", maxResults: 30},
@@ -114,6 +116,57 @@ class Item {
         }
 
         throw new Error('Unable to fetch labels from Vision API');
+    }
+
+    getLabels = async () => {
+        const assignedLabels = await this.fetchGoogleVisionLabels()
+        let all_labels = [];
+        let extraLabelsIncluded = false;
+        for (let lbl of assignedLabels) {
+            while (possibleLabels.hasOwnProperty(lbl)) {
+                // Don't re-add label that is already in
+                if (all_labels.includes(lbl)) {
+                    break;
+                }
+
+                const lbl_info = possibleLabels[lbl]
+                console.log(lbl_info)
+                // Check Minimum Temperature
+                if (this.minTemp == null && lbl_info.minTemp != null) {
+                    this.minTemp = lbl_info.minTemp;
+                }
+
+                // Check Max Temperature
+                if (this.maxTemp == null && lbl_info.maxTemp != null) {
+                    this.maxTemp = lbl_info.maxTemp;
+                }
+
+                // Add label to list of labels
+                all_labels.push(lbl);
+                if (!extraLabelsIncluded) {
+                    const additionalLabels = lbl_info.weatherLabels.concat(lbl_info.otherLabels);
+                    for (let extra_label of additionalLabels) {
+                        !all_labels.includes(extra_label) && all_labels.push(extra_label);
+                    }
+                    extraLabelsIncluded = true;
+                }
+
+                lbl = lbl_info.parentLabel;
+
+                // Check if lbl is clothing type label
+                if (types.hasOwnProperty(lbl)) {
+                    if (this.clothingType == null) {
+                        this.clothingType = types[lbl];
+                    }
+                    break;
+                }
+            }
+        }
+        console.log("Clothing Type:", this.clothingType);
+        console.log("Min Temp: ", this.minTemp);
+        console.log("Max Temp: ", this.maxTemp);
+        console.log(all_labels);
+        return all_labels;
     }
 }
 
