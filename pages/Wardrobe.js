@@ -4,10 +4,11 @@ import { Camera } from 'expo-camera';
 import * as Permissions from 'expo-permissions';
 import styles from '../styles';
 import CategoryTab from '../components/CategoryTab';
-import Item from '../pages/Item';
-import ConfirmPhoto from './ConfirmPhoto'; 
-import LabelPage from './LabelPage'; // Importing the LabelPage component
-import ClothingList from '../components/ClothingList'; // Importing the ClothingList component
+import Item from '../utils/Item';
+import ConfirmPhoto from './ConfirmPhoto';
+import LabelPage from './LabelPage';
+import ClothingList from '../components/ClothingList';
+import {possibleAccessoryLabels, SUN} from "../utils/Constants"; // Importing the ClothingList component
 
 const Wardrobe = () => {
   const [cameraOpen, setCameraOpen] = useState(false);
@@ -46,8 +47,22 @@ const Wardrobe = () => {
 
     const handleDone = async (item) => {
         console.log("Attempting To Upload!");
-        await item.uploadToS3(); // Assuming the uploadToS3 function is in the Item class
+        // await item.uploadToS3(); // Assuming the uploadToS3 function is in the Item class
         console.log("Done Uploading.");
+
+        // TODO Remove me: used for testing
+        const uploadItem = new Item("bucket_hat", null)
+
+        console.log("Getting labels...",)
+        await uploadItem.setLabels()
+        console.log("Labels: ", uploadItem.labels)
+        console.log("Weather Labels: ", uploadItem.weatherLabels)
+        console.log("Style Labels: ", uploadItem.styleLabels)
+        console.log("Labeling Complete!")
+        console.log("Attempting to save item to db...")
+        await uploadItem.uploadItemToDatabase()
+        console.log("I really hope this is uploaded")
+
         setShowLabelPage(false);
         setPhoto(null);
         setPhotoName(null);
@@ -56,7 +71,7 @@ const Wardrobe = () => {
     const handleTabPress = (category) => {
       setActiveCategory(category);
    };
-   
+
 
     let cameraRef;
 
@@ -101,12 +116,12 @@ const Wardrobe = () => {
                     </TouchableOpacity>
                 </>
             ) : activeCategory ? ( // Condition to check if activeCategory is set
-                <ClothingList 
-                  categoryTitle={activeCategory} 
-                  items={itemsForCategory[activeCategory]} 
+                <ClothingList
+                  categoryTitle={activeCategory}
+                  items={itemsForCategory[activeCategory]}
                   onExit={() => setActiveCategory(null)}
                 />
-    
+
             ) : (
                 <Camera 
                     ref={ref => (cameraRef = ref)}

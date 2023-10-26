@@ -4,7 +4,7 @@ import styles from '../styles';
 import OutfitItem from '../components/OutfitItem'; 
 import * as Location from 'expo-location';
 import { useData } from '../DataContext'; // Import the useData hook
-import Item from './Item'; // Import the Item class
+import Item from '../utils/Item'; // Import the Item class
 
 const API_KEY = "5fbd4f888cc555b162748e6e02814f39"; 
 
