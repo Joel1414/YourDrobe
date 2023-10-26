@@ -5,7 +5,7 @@ import Waredrobe from './pages/Wardrobe';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
-import Item from './pages/Item';
+import Item from './utils/Item';
 
 const Tab = createBottomTabNavigator();
 

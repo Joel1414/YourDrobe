@@ -7,8 +7,8 @@ import CategoryTab from '../components/CategoryTab';
 import Item from '../utils/Item';
 import ConfirmPhoto from './ConfirmPhoto';
 import LabelPage from './LabelPage';
-import {Outfit} from "../utils/Outfit"; // Importing the LabelPage component
-import ClothingList from '../components/ClothingList'; // Importing the ClothingList component
+import ClothingList from '../components/ClothingList';
+import {possibleAccessoryLabels, SUN} from "../utils/Constants"; // Importing the ClothingList component
 
 const Wardrobe = () => {
   const [cameraOpen, setCameraOpen] = useState(false);
