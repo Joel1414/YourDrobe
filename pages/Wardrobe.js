@@ -9,12 +9,11 @@ import ConfirmPhoto from './ConfirmPhoto';
 import LabelPage from './LabelPage';
 import ClothingList from '../components/ClothingList';
 import {
-    possibleAccessoryLabels,
-    possibleLabels,
     possibleWeatherLabels,
     selectableNonWeatherLabels,
-    SUN
-} from "../utils/Constants"; // Importing the ClothingList component
+    types
+} from "../utils/Constants";
+import {getItemsWithImage, getItemsWithType} from "../utils/OutfitGenerator";
 
 const Wardrobe = () => {
   const [cameraOpen, setCameraOpen] = useState(false);
@@ -122,10 +121,10 @@ const Wardrobe = () => {
                 ) : !cameraOpen && !activeCategory ? (  // Adjusted condition to also check if activeCategory is not set
                 <>
                     <View style={styles.tabsContainer}>
-                        <CategoryTab category="Tops" onPress={() => handleTabPress('Tops')} />
-                        <CategoryTab category="Bottoms" onPress={() => handleTabPress('Bottoms')} />
-                        <CategoryTab category="Accessories" onPress={() => handleTabPress('Accessories')} />
-                        <CategoryTab category="Shoes" onPress={() => handleTabPress('Shoes')} />
+                        <CategoryTab category="Tops" onPress={() => handleTabPress(types.TOP)}/>
+                        <CategoryTab category="Bottoms" onPress={() => handleTabPress(types.BOTTOM)}/>
+                        <CategoryTab category="Accessories" onPress={() => handleTabPress(types.ACCESSORIES)}/>
+                        <CategoryTab category="Shoes" onPress={() => handleTabPress(types.SHOES)}/>
                     </View>
                     <TouchableOpacity style={styles.addButton} onPress={openCamera}>
                         <Image source={require('../bigIcons/Plus2.png')} style={{ width: 100, height: 100 }} />
@@ -134,7 +133,6 @@ const Wardrobe = () => {
             ) : activeCategory ? ( // Condition to check if activeCategory is set
                 <ClothingList
                   categoryTitle={activeCategory}
-                  items={itemsForCategory[activeCategory]}
                   onExit={() => setActiveCategory(null)}
                 />
 

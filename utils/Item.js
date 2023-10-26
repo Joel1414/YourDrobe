@@ -25,7 +25,7 @@ AWS.config.update({
     secretAccessKey: 'nhOfr2n9Okn+SoiFMv+1hdM0+DOHp3IKnxw883Px',
 });
 
-const s3 = new AWS.S3();
+export const s3 = new AWS.S3();
 
 class Item {
     constructor(name, base64Data, labels = null, weatherLabels = null) {
@@ -103,6 +103,7 @@ class Item {
             });
         });
     }
+
 
     fetchGoogleVisionLabels = async () => {
         const imageBuffer = await this.getImageFromS3()
