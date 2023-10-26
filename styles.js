@@ -385,6 +385,16 @@ clothingExitButton: {
   right: 130,
 },
 
+temperatureInput: {
+  height: 40,
+  borderColor: 'gray',
+  borderWidth: 1,
+  width: 100,
+  paddingHorizontal: 10,
+  marginVertical: 10,
+  color: 'white',
+}
+
 
 
 });
