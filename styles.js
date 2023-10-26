@@ -356,6 +356,35 @@ outfitItemInfoIcon: {
   marginLeft: 10, 
 },
 
+clothingTitle: {
+  fontSize: 24,
+  fontWeight: 'bold',
+  textAlign: 'center',
+  marginVertical: 20,
+  color: '#fff', 
+  top: 40,
+},
+clothingList: {
+  alignItems: 'center',
+  minWidth: '100%',
+  maxHeight: '100%',
+},
+clothingContainer: {
+  marginBottom: 20,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
+clothingImage: {
+  width: 150, 
+  height: 150, 
+},
+
+clothingExitButton: {
+  position: 'absolute',
+  top: 40,
+  right: 130,
+},
+
 
 
 });
