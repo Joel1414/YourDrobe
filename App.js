@@ -5,18 +5,15 @@ import Waredrobe from './pages/Wardrobe';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { Image } from 'react-native';
-import Item from './utils/Item';
+import Item from './pages/Item';
+import { DataProvider } from './DataContext';
 
 const Tab = createBottomTabNavigator();
 
-const itemsList = [
-  new Item('Grey Thrills Cap', 'base64DataHere'),
-  new Item('White Sams Shirt', 'base64DataHere'),
-  // ... more items
-];
 
 export default function App() {
   return (
+    <DataProvider>
     <NavigationContainer>
       <Tab.Navigator
         screenOptions={{
@@ -38,7 +35,6 @@ export default function App() {
         <Tab.Screen 
           name="Outfit" 
           component={Outfit}
-          initialParams={{ items: itemsList }}  // Passing the itemsList here
           options={{
             tabBarIcon: ({ color, size }) => (
               <Image source={require('./icons/Icon_Sock.png')} style={{ width: size, height: size, tintColor: color }} />
@@ -56,5 +52,6 @@ export default function App() {
         />
       </Tab.Navigator>
     </NavigationContainer>
+    </DataProvider>
   );
 }
