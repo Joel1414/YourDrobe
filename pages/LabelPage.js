@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView } from 'react-native';
+import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
 import styles from '../styles';
 
 const LabelPage = ({
@@ -18,7 +18,8 @@ const LabelPage = ({
     const [selectedLabels, setSelectedLabels] = useState([...defaultLabels, ...(item.labels || [])]);
     const [selectedColors, setSelectedColors] = useState([...defaultColors, ...(item.colors || [])]);
     const [selectedWeather, setSelectedWeather] = useState([...defaultWeather, ...(item.weather || [])]);
-    const [selectedTemperature, setSelectedTemperature] = useState([...defaultTemperature, ...(item.temperatures || [])]); // New state for selected temperatures
+    const [minTemperature, setMinTemperature] = useState(''); // New state for minimum temperature
+    const [maxTemperature, setMaxTemperature] = useState(''); // New state for maximum temperature
 
     const toggleSelection = (selectionType, value) => {
         let currentSelection, setSelection;
@@ -36,10 +37,6 @@ const LabelPage = ({
                 currentSelection = selectedWeather;
                 setSelection = setSelectedWeather;
                 break;
-            case 'temperature': // New case for temperature
-                currentSelection = selectedTemperature;
-                setSelection = setSelectedTemperature;
-                break;
             default:
                 return;
         }
@@ -53,6 +50,7 @@ const LabelPage = ({
 
 
     return (
+        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
         <View style={{ alignItems: 'center', justifyContent: 'center', flex: 1 }}>
             <TouchableOpacity style={styles.exitButton} onPress={onExit}>
                 <Image source={require('../icons/Icon_Exit.png')} style={styles.exitIcon}/>
@@ -99,28 +97,36 @@ const LabelPage = ({
                 ))}
             </ScrollView>
 
-            <Text style={styles.headerText}>Temperature</Text>
-            <ScrollView contentContainerStyle={styles.labelContainer} horizontal={true} showsHorizontalScrollIndicator={false}>
-                {possibleTemperatures.map(temp => (
-                    <TouchableOpacity 
-                        key={temp} 
-                        style={selectedTemperature.includes(temp) ? styles.labelSelected : styles.label}
-                        onPress={() => toggleSelection('temperature', temp)}
-                    >
-                        <Text style={styles.labelText}>{temp}</Text>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
+            <Text style={styles.headerText}>Temperature Range (°C)</Text>
+            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', marginVertical: 10 }}>
+                <TextInput
+                    style={styles.temperatureInput}
+                    placeholder="Min"
+                    keyboardType="number-pad"
+                    value={minTemperature}
+                    onChangeText={setMinTemperature}
+                />
+                <Text style={{ marginHorizontal: 10 }}>to</Text>
+                <TextInput
+                    style={styles.temperatureInput}
+                    placeholder="Max"
+                    keyboardType="number-pad"
+                    value={maxTemperature}
+                    onChangeText={setMaxTemperature}
+                />
+            </View>
 
             <TouchableOpacity style={styles.doneButton2} onPress={() => { 
                 item.labels = selectedLabels; // Update the item object with the new labels
                 item.colors = selectedColors;
                 item.weather = selectedWeather;
+                item.temperatureRange = { min: minTemperature, max: maxTemperature }; // Update temperature range
                 onDone(item);
             }}>
                 <Text style={styles.doneButtonText}>Done</Text>
             </TouchableOpacity>
         </View>
+        </TouchableWithoutFeedback>
     );
 };
 
