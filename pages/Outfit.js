@@ -3,10 +3,12 @@ import { View, Text, TouchableOpacity, Image } from 'react-native';
 import styles from '../styles';
 import OutfitItem from '../components/OutfitItem'; 
 import * as Location from 'expo-location';
+import { useData } from '../DataContext'; // Import the useData hook
+import Item from './Item'; // Import the Item class
 
 const API_KEY = "5fbd4f888cc555b162748e6e02814f39"; 
 
-class Outfit extends React.Component {
+class OutfitClass extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -96,6 +98,13 @@ class Outfit extends React.Component {
             </View>
         );
     }
+}
+
+// This is the functional wrapper component
+const Outfit = (props) => {
+    const { itemsList } = useData();  // <-- Use the useData hook here
+
+    return <OutfitClass {...props} items={itemsList} />; // <-- Pass itemsList to OutfitClass
 }
 
 export default Outfit;
