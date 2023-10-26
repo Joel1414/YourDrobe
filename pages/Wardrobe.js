@@ -23,6 +23,7 @@ const Wardrobe = () => {
   const [photoData, setPhotoData] = useState(null);
   const [photoName, setPhotoName] = useState(null);
   const [showLabelPage, setShowLabelPage] = useState(false);
+    const [defaultItem, setDefaultItem] = useState(null);
     const [defaultLabels, setDefaultLabels] = useState(null);
     const [defaultColors, setDefaultColors] = useState(null);
     const [defaultWeatherLabels, setDefaultWeatherLabels] = useState(null);
@@ -55,7 +56,14 @@ const Wardrobe = () => {
     };
 
     const handleDone = async (item) => {
-        // TODO change to update the db
+        let uploadItem = new Item(item.name, photoData.base64, item.labels, item.weather);
+        await uploadItem.forceLabels(item.labels, item.weather, defaultItem.minTemp, defaultItem.maxTemp, defaultItem.clothingType);
+        console.log("Upload Item Labels: ", uploadItem.labels);
+        console.log("Upload Item Style Labels: ", uploadItem.styleLabels);
+        console.log("Upload Item Weather Labels: ", uploadItem.weatherLabels);
+        console.log(`Upload Item MinTemp: ${uploadItem.minTemp}, MaxTemp: ${uploadItem.maxTemp}`);
+        console.log("Upload Item Clothing Type: ", uploadItem.clothingType);
+        await uploadItem.uploadItemToDatabase();
         setShowLabelPage(false);
         setPhoto(null);
         setPhotoName(null);
@@ -63,16 +71,18 @@ const Wardrobe = () => {
 
     const onConfirmPhoto = async (name) => {
         setPhotoName(name);
-        console.log(photoData.base64)
+        // TODO Joel add loading screen from here
         const item = new Item(name, photoData.base64);
         console.log("Attempting to upload image.")
         await item.uploadToS3()
         console.log("Uploaded")
         console.log("Getting Labels...")
         await item.setLabels()
+        setDefaultItem(item)
         setDefaultLabels(item.labels || [])
         console.log("Default Labels: ", defaultLabels)
         setDefaultWeatherLabels(item.weatherLabels || [])
+        // TODO Joel add loading screen to here
     }
 
     const handleTabPress = (category) => {
