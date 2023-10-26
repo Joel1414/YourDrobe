@@ -49,7 +49,7 @@ class Item {
         } catch (error) {
             console.error('Error uploading to S3:', error);
         }
-        // await this.removeBackground()
+        await this.removeBackground()
     }
 
     removeBackground = async () => {
@@ -76,7 +76,7 @@ class Item {
             const outlinedImageBlob = await photoRoomResponse.blob()
             const response = await s3.putObject({
                 Bucket: 'yourdrobe-items',
-                Key: "Outlined.jpg",
+                Key: `${this.name}.png`,
                 Body: outlinedImageBlob,
                 ContentType: 'image/jpeg', // Or whichever format the image is in
                 ACL: "public-read",

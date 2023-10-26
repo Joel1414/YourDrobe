@@ -8,7 +8,13 @@ import Item from '../utils/Item';
 import ConfirmPhoto from './ConfirmPhoto';
 import LabelPage from './LabelPage';
 import ClothingList from '../components/ClothingList';
-import {possibleAccessoryLabels, SUN} from "../utils/Constants"; // Importing the ClothingList component
+import {
+    possibleAccessoryLabels,
+    possibleLabels,
+    possibleWeatherLabels,
+    selectableNonWeatherLabels,
+    SUN
+} from "../utils/Constants"; // Importing the ClothingList component
 
 const Wardrobe = () => {
   const [cameraOpen, setCameraOpen] = useState(false);
@@ -17,6 +23,9 @@ const Wardrobe = () => {
   const [photoData, setPhotoData] = useState(null);
   const [photoName, setPhotoName] = useState(null);
   const [showLabelPage, setShowLabelPage] = useState(false);
+    const [defaultLabels, setDefaultLabels] = useState(null);
+    const [defaultColors, setDefaultColors] = useState(null);
+    const [defaultWeatherLabels, setDefaultWeatherLabels] = useState(null);
   const [activeCategory, setActiveCategory] = useState(null); // New state to track the active category
 
   const itemsForCategory = {
@@ -38,7 +47,7 @@ const Wardrobe = () => {
 
     const takePicture = async () => {
         if (cameraRef) {
-            const photoCapture = await cameraRef.takePictureAsync();
+            const photoCapture = await cameraRef.takePictureAsync({base64: true});
             setPhoto(photoCapture.uri);
             setPhotoData(photoCapture);
             setCameraOpen(false);
@@ -46,27 +55,25 @@ const Wardrobe = () => {
     };
 
     const handleDone = async (item) => {
-        console.log("Attempting To Upload!");
-        // await item.uploadToS3(); // Assuming the uploadToS3 function is in the Item class
-        console.log("Done Uploading.");
-
-        // TODO Remove me: used for testing
-        const uploadItem = new Item("bucket_hat", null)
-
-        console.log("Getting labels...",)
-        await uploadItem.setLabels()
-        console.log("Labels: ", uploadItem.labels)
-        console.log("Weather Labels: ", uploadItem.weatherLabels)
-        console.log("Style Labels: ", uploadItem.styleLabels)
-        console.log("Labeling Complete!")
-        console.log("Attempting to save item to db...")
-        await uploadItem.uploadItemToDatabase()
-        console.log("I really hope this is uploaded")
-
+        // TODO change to update the db
         setShowLabelPage(false);
         setPhoto(null);
         setPhotoName(null);
     };
+
+    const onConfirmPhoto = async (name) => {
+        setPhotoName(name);
+        console.log(photoData.base64)
+        const item = new Item(name, photoData.base64);
+        console.log("Attempting to upload image.")
+        await item.uploadToS3()
+        console.log("Uploaded")
+        console.log("Getting Labels...")
+        await item.setLabels()
+        setDefaultLabels(item.labels || [])
+        console.log("Default Labels: ", defaultLabels)
+        setDefaultWeatherLabels(item.weatherLabels || [])
+    }
 
     const handleTabPress = (category) => {
       setActiveCategory(category);
@@ -80,14 +87,14 @@ const Wardrobe = () => {
             <Text style={styles.header}>Wardrobe</Text>
             
             {showLabelPage ? (
-                <LabelPage 
-                  defaultLabels={['Hat']}
+                <LabelPage
+                    defaultLabels={defaultLabels}
                   defaultColors={['Teal']}
-                  defaultWeather={['All']}
+                    defaultWeather={defaultWeatherLabels}
                   defaultTemperature={['25']}
-                  possibleLabels={['Hat', 'Earrings', 'Necklace', 'Glasses', 'Fancy', 'Sport', 'Felt', 'Casual', 'Silk', 'Cotton', 'Linen']} 
+                    possibleLabels={selectableNonWeatherLabels}
                   possibleColors={['Teal', 'Yellow', 'Red', 'Blue', 'Green', 'Orange', 'Purple', 'Pink', 'Black', 'White', 'Grey', 'Brown']}
-                  possibleWeather={['All', 'Sunny', 'Rainy', 'Snowy', 'Summer', 'Winter', 'Spring', 'Autumn']}
+                    possibleWeather={possibleWeatherLabels}
                   possibleTemperatures={['-20', '-5', '25', '50']}
                   item={{ name: photoName, photo: photoData.uri, labels: [] }} 
                   onDone={handleDone} 
@@ -98,8 +105,7 @@ const Wardrobe = () => {
                   photo={photo} 
                   onRetake={openCamera}
                   onConfirm={(name) => {
-                      setPhotoName(name);
-                      setShowLabelPage(true);
+                      onConfirmPhoto(name).then(r => setShowLabelPage(true));
                   }}
                   onExit={() => setPhoto(null)}
                 />
