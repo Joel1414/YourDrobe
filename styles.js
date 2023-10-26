@@ -365,19 +365,27 @@ clothingTitle: {
   top: 40,
 },
 clothingList: {
-  alignItems: 'center',
-  minWidth: '100%',
-  maxHeight: '100%',
+  flexDirection: 'row', // Arrange children in a row
+  flexWrap: 'wrap',     // Allow the items to wrap
+  justifyContent: 'space-between',  // Evenly distribute space between two images in a row
+  alignItems: 'flex-start',  // Align items to the start of the container
+  width: '100%',
 },
+
 clothingContainer: {
-  marginBottom: 20,
+  width: '49%',   // Half of the parent's width minus a small percentage for spacing
+  marginBottom: 2,  // Spacing between rows
   alignItems: 'center',
   justifyContent: 'center',
 },
+
 clothingImage: {
-  width: 150, 
+  width: '100%',  // Take full width of the clothingContainer
   height: 150, 
+  resizeMode: 'contain',  // Image fits and respects the aspect ratio
 },
+
+
 
 clothingExitButton: {
   position: 'absolute',
