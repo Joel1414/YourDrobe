@@ -141,7 +141,7 @@ class Item {
         let checkedLabels = 0;
         for (let lbl of assignedLabels) {
             if (possibleLabels.hasOwnProperty(lbl)) {
-                if (checkedLabels > 2) {
+                if (checkedLabels > 1) {
                     break;
                 }
                 checkedLabels += 1;
