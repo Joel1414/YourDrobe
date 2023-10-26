@@ -1,6 +1,6 @@
 import AWS from 'aws-sdk';
 import {Buffer} from 'buffer';
-import {possibleLabels, types} from './Constants.js';
+import {possibleLabels, possibleStyleLabels, types} from './Constants.js';
 import {initializeApp} from "firebase/app";
 import {getFirestore, collection, addDoc} from "@firebase/firestore";
 
@@ -25,12 +25,14 @@ AWS.config.update({
     secretAccessKey: 'nhOfr2n9Okn+SoiFMv+1hdM0+DOHp3IKnxw883Px',
 });
 
-const s3 = new AWS.S3();
+export const s3 = new AWS.S3();
 
 class Item {
-    constructor(name, base64Data) {
+    constructor(name, base64Data, labels = null, weatherLabels = null) {
         this.name = name;
         this.base64Data = base64Data;
+        this.labels = labels;
+        this.weatherLabels = weatherLabels;
     }
 
     uploadToS3 = async () => {
@@ -49,7 +51,7 @@ class Item {
         } catch (error) {
             console.error('Error uploading to S3:', error);
         }
-        // await this.removeBackground()
+        await this.removeBackground()
     }
 
     removeBackground = async () => {
@@ -76,7 +78,7 @@ class Item {
             const outlinedImageBlob = await photoRoomResponse.blob()
             const response = await s3.putObject({
                 Bucket: 'yourdrobe-items',
-                Key: "Outlined.jpg",
+                Key: `${this.name}.png`,
                 Body: outlinedImageBlob,
                 ContentType: 'image/jpeg', // Or whichever format the image is in
                 ACL: "public-read",
@@ -91,7 +93,7 @@ class Item {
     getImageFromS3 = async () => {
         const params = {
             Bucket: "yourdrobe-items",
-            Key: (this.name + ".png")        //TODO: Change to this.name after testing
+            Key: (this.name + ".png")
         };
 
         return new Promise((resolve, reject) => {
@@ -101,6 +103,7 @@ class Item {
             });
         });
     }
+
 
     fetchGoogleVisionLabels = async () => {
         const imageBuffer = await this.getImageFromS3()
@@ -134,6 +137,20 @@ class Item {
 
         throw new Error('Unable to fetch labels from Vision API');
     }
+    forceLabels = async (newLabels, newWeatherLabels, minTemp, maxTemp, type) => {
+        let newStyleLabels = [];
+        for (const lbl of newLabels) {
+            if (possibleStyleLabels.includes(lbl)) {
+                newStyleLabels.push(lbl)
+            }
+        }
+        this.styleLabels = newStyleLabels;
+        this.labels = newLabels;
+        this.weatherLabels = newWeatherLabels;
+        this.minTemp = minTemp;
+        this.maxTemp = maxTemp;
+        this.clothingType = type;
+    }
 
     setLabels = async () => {
         const assignedLabels = await this.fetchGoogleVisionLabels()
@@ -153,7 +170,6 @@ class Item {
                 }
 
                 const lbl_info = possibleLabels[lbl]
-                console.log(lbl_info)
                 // Check Minimum Temperature
                 if (this.minTemp == null && lbl_info.minTemp != null) {
                     this.minTemp = lbl_info.minTemp;

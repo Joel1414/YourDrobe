@@ -1,5 +1,15 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, Image, StyleSheet, ScrollView, Keyboard, TouchableWithoutFeedback } from 'react-native';
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    Image,
+    StyleSheet,
+    ScrollView,
+    Keyboard,
+    TouchableWithoutFeedback,
+    TextInput
+} from 'react-native';
 import styles from '../styles';
 
 const LabelPage = ({

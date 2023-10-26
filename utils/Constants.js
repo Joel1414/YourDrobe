@@ -844,5 +844,6 @@ export const possibleFootwearLabels = {
 
 export const possibleLabels = Object.assign({}, possibleTopLabels, possibleBottomLabels, possibleAccessoryLabels, possibleFootwearLabels)
 
+export const selectableNonWeatherLabels = possibleStyleLabels.concat(Object.keys(possibleLabels))
 export const possibleColourLabels = ["Blue", "Green", "Yellow"]     //TODO populate list
 export const possibleTemperatureLabesl = ["Cold", "Sub-Zero", "Hot", "Warm"]    //TODO populate list
