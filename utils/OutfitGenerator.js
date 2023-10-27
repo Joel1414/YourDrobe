@@ -101,7 +101,7 @@ export const nameToImageUrl = (name) => {
     const region = 'ap-southeast-2';
     const bucketName = 'yourdrobe-items';
 
-    return `https://s3.${region}.amazonaws.com/${bucketName}/${name}`;
+    return `https://s3.${region}.amazonaws.com/${bucketName}/${name}.png`;
 }
 
 export const getItemImageUrlsOfType = async (typeLabel) => {

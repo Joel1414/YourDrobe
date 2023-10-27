@@ -11,6 +11,7 @@ import {
     TextInput
 } from 'react-native';
 import styles from '../styles';
+import {nameToImageUrl} from "../utils/OutfitGenerator";
 
 const LabelPage = ({
     possibleLabels,
@@ -58,6 +59,8 @@ const LabelPage = ({
         }
     };
 
+    const imageUrl = nameToImageUrl(item.name)
+
 
     return (
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
@@ -66,7 +69,7 @@ const LabelPage = ({
                 <Image source={require('../icons/Icon_Exit.png')} style={styles.exitIcon}/>
             </TouchableOpacity>
             <Text style={styles.imageNameText}>{item.name}</Text>
-            <Image source={{ uri: item.photo }} style={styles.photo2} />
+            <Image source={{uri: imageUrl}} style={styles.photo2}/>
 
             <Text style={styles.headerText}>Item Type</Text>
             <ScrollView contentContainerStyle={styles.labelContainer} horizontal={true} showsHorizontalScrollIndicator={false}>
