@@ -6,7 +6,7 @@ import styles from '../styles';
 const OutfitItem = ({ name, imageUrl, onRefresh, onFavorite, onInfo }) => {
     return (
         <View style={styles.outfitItemContainer}>
-            <Image source={{ uri: imageUrl }} style={styles.outfitItemImage} />
+            <Image source={imageUrl} style={styles.outfitItemImage} />
             <View style={styles.outfitItemInnerContainer}>
                 <Text style={styles.outfitItemText}>{name}</Text>
                 <View style={styles.outfitIconContainer}>

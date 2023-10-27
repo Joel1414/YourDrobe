@@ -9,11 +9,50 @@ import { getOutfit } from '../utils/OutfitGenerator';
 
 const API_KEY = "5fbd4f888cc555b162748e6e02814f39"; 
 
+const NEW_OUTFIT_LIST = [
+    { 
+        name: 'Black Sunnies',
+        imageUrl: require('../icons/Sunnies2.png')
+    },
+    {
+        name: 'Blue Shirt',
+        imageUrl: require('../icons/WShirt.png')
+    },
+    {
+        name: 'White Gym Shorts',
+        imageUrl: require('../icons/Short2.png')
+    },
+    {
+        name: 'Sneakers',
+        imageUrl: require('../icons/WSneaker.png')
+    }
+];
+
 class OutfitClass extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            currentOutfit: [],
+            currentOutfit: [
+                { 
+                    name: 'Orange Sunnies',
+                    imageUrl: require('../icons/Sunnies.png')
+                },
+
+                {
+                    name: 'Green Shirt',
+                    imageUrl: require('../icons/ShirtGreen.png')
+                },
+                    
+                {
+                    name: 'Jean Shorts',
+                    imageUrl: require('../icons/JeanShort.png')
+                },
+
+                {
+                    name: 'Birkenstocks',
+                    imageUrl: require('../icons/Birk.png')
+                }
+            ],
             error: null,
             showWeather: false,
             weatherData: null,
@@ -22,19 +61,8 @@ class OutfitClass extends React.Component {
         this.itemsList = this.props.items;
     }
 
-    generateOutfit = async () => {
-        const { weatherData } = this.state;
-
-        // Convert the temperature from Kelvin to Celsius
-        const tempInCelsius = Math.round(weatherData.temp - 274.15);
-
-        try {
-            const outfit = await getOutfit(tempInCelsius);
-            this.setState({ currentOutfit: outfit });
-        } catch (error) {
-            console.error("Error generating outfit: ", error);
-            this.setState({ error: "Failed to generate outfit." });
-        }
+    generateOutfit = () => {
+        this.setState({ currentOutfit: NEW_OUTFIT_LIST });
     };
 
     componentDidMount() {
@@ -72,9 +100,6 @@ class OutfitClass extends React.Component {
         this.setState(prevState => ({ showWeather: !prevState.showWeather }));
     };
 
-    generateOutfit = () => {
-        // Logic for generating outfit goes here
-    };
 
     regenerateOutfit = () => {
         // Logic for regenerating outfit goes here
