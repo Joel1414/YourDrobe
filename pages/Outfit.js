@@ -22,9 +22,10 @@ const NEW_OUTFIT_LIST = [
         name: 'White Gym Shorts',
         imageUrl: require('../icons/Short2.png')
     },
+
     {
-        name: 'Blue Sneakers',
-        imageUrl: require('../icons/WSneaker.png')
+        name: 'Birkenstocks',
+        imageUrl: require('../icons/Birk.png')
     }
 ];
 
@@ -64,8 +65,8 @@ const currentOutfit = [
     },
 
     {
-        name: 'Birkenstocks',
-        imageUrl: require('../icons/Birk.png')
+        name: 'Blue Sneakers',
+        imageUrl: require('../icons/WSneaker.png')
     }
 ];
 
@@ -90,8 +91,8 @@ class OutfitClass extends React.Component {
                 },
 
                 {
-                    name: 'Birkenstocks',
-                    imageUrl: require('../icons/Birk.png')
+                    name: 'Blue Sneakers',
+                    imageUrl: require('../icons/WSneaker.png')
                 }
             ],
             clickCount: 0,
