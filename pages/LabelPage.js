@@ -40,10 +40,6 @@ const LabelPage = ({
                 currentSelection = selectedLabels;
                 setSelection = setSelectedLabels;
                 break;
-            case 'color':
-                currentSelection = selectedColors;
-                setSelection = setSelectedColors;
-                break;
             case 'weather':
                 currentSelection = selectedWeather;
                 setSelection = setSelectedWeather;
@@ -80,19 +76,6 @@ const LabelPage = ({
                         onPress={() => toggleSelection('label', label)}
                     >
                         <Text style={styles.labelText}>{label}</Text>
-                    </TouchableOpacity>
-                ))}
-            </ScrollView>
-
-            <Text style={styles.headerText}>Colors</Text>
-            <ScrollView contentContainerStyle={styles.labelContainer} horizontal={true} showsHorizontalScrollIndicator={false}>
-                {possibleColors.map(color => (
-                    <TouchableOpacity 
-                        key={color} 
-                        style={selectedColors.includes(color) ? styles.labelSelected : styles.label}
-                        onPress={() => toggleSelection('color', color)}
-                    >
-                        <Text style={styles.labelText}>{color}</Text>
                     </TouchableOpacity>
                 ))}
             </ScrollView>

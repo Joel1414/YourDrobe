@@ -3,7 +3,8 @@ import { View, Text, Switch } from 'react-native';
 import styles from '../styles';
 
 const SettingToggle = ({ title, description }) => {
-  const [isEnabled, setIsEnabled] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(title === "Location Services");
+
 
   const toggleSwitch = () => {
     setIsEnabled(previousState => !previousState);
