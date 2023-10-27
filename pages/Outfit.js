@@ -23,8 +23,49 @@ const NEW_OUTFIT_LIST = [
         imageUrl: require('../icons/Short2.png')
     },
     {
-        name: 'Sneakers',
+        name: 'Blue Sneakers',
         imageUrl: require('../icons/WSneaker.png')
+    }
+];
+
+const OUTFIT_LIST_2 = [
+    {
+        name: 'Black Sports Cap',
+        imageUrl: require('../icons/BlackCap.png')
+    },
+    {
+        name: 'White Singlet',
+        imageUrl: require('../icons/Singlet.png')
+    },
+    {
+        name: 'Black Leggings',
+        imageUrl: require('../icons/Leggings.png')
+    },
+    {
+        name: 'Red Sneakers',
+        imageUrl: require('../icons/RedSneaker.png')
+    }
+];
+
+const currentOutfit = [
+    { 
+        name: 'Orange Sunnies',
+        imageUrl: require('../icons/Sunnies.png')
+    },
+
+    {
+        name: 'Green Shirt',
+        imageUrl: require('../icons/ShirtGreen.png')
+    },
+        
+    {
+        name: 'Jean Shorts',
+        imageUrl: require('../icons/JeanShort.png')
+    },
+
+    {
+        name: 'Birkenstocks',
+        imageUrl: require('../icons/Birk.png')
     }
 ];
 
@@ -53,6 +94,7 @@ class OutfitClass extends React.Component {
                     imageUrl: require('../icons/Birk.png')
                 }
             ],
+            clickCount: 0,
             error: null,
             showWeather: false,
             weatherData: null,
@@ -62,7 +104,24 @@ class OutfitClass extends React.Component {
     }
 
     generateOutfit = () => {
-        this.setState({ currentOutfit: NEW_OUTFIT_LIST });
+        let newCount = this.state.clickCount + 1;
+        let newOutfitList = [];
+        switch (newCount) {
+            case 1:
+                newOutfitList = NEW_OUTFIT_LIST;
+                break;
+            case 2:
+                newOutfitList = OUTFIT_LIST_2;
+                break;
+            default:
+                newCount = 0;  // Reset the counter if it goes beyond the available lists
+                newOutfitList = currentOutfit;  // Set to the original outfit or any other default
+                break;
+        }
+        this.setState({
+            clickCount: newCount,
+            currentOutfit: newOutfitList
+        });
     };
 
     componentDidMount() {
