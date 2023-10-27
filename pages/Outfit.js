@@ -5,6 +5,7 @@ import OutfitItem from '../components/OutfitItem';
 import * as Location from 'expo-location';
 import { useData } from '../DataContext'; // Import the useData hook
 import Item from '../utils/Item'; // Import the Item class
+import { getOutfit } from '../utils/OutfitGenerator';
 
 const API_KEY = "5fbd4f888cc555b162748e6e02814f39"; 
 
@@ -20,6 +21,21 @@ class OutfitClass extends React.Component {
         };
         this.itemsList = this.props.items;
     }
+
+    generateOutfit = async () => {
+        const { weatherData } = this.state;
+
+        // Convert the temperature from Kelvin to Celsius
+        const tempInCelsius = Math.round(weatherData.temp - 274.15);
+
+        try {
+            const outfit = await getOutfit(tempInCelsius);
+            this.setState({ currentOutfit: outfit });
+        } catch (error) {
+            console.error("Error generating outfit: ", error);
+            this.setState({ error: "Failed to generate outfit." });
+        }
+    };
 
     componentDidMount() {
         this.fetchInitialWeather();
@@ -68,14 +84,15 @@ class OutfitClass extends React.Component {
         return (
           <View style={styles.container}>
             <Text style={styles.header}>Today's Outfit</Text>
-
             {this.state.currentOutfit.map((item, index) => (
                 <OutfitItem 
                     key={index} 
-                    item={item}  // passing the entire item object
-                    // Add more props and event handlers as needed
+                    name={item.name}  // passing the item name
+                    imageUrl={item.imageUrl}  // passing the item image URL
+                    // Continue with other props like onRefresh, onFavorite, onInfo etc.
                 />
             ))}
+
 
                 <TouchableOpacity style={styles.generateButton} onPress={this.generateOutfit}>
                     <Text style={styles.generateButtonText}>Generate Outfit</Text>

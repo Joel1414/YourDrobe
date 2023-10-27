@@ -56,16 +56,20 @@ export const getOutfit = async (temp) => {
     let outfit = {};
     for (const type in types) {
         let typeLabel = types[type];
-        const possibleChoices = await this.getItemsWithTypeInTempRange(typeLabel, temp);
+        const possibleChoices = await getItemsWithTypeInTempRange(typeLabel, temp);
         if (possibleChoices.length > 0) {
             const randomIndex = Math.floor(Math.random() * possibleChoices.length);
-            outfit[typeLabel] = possibleChoices[randomIndex];
+            outfit[typeLabel] = {
+                name: possibleChoices[randomIndex],
+                imageUrl: nameToImageUrl(possibleChoices[randomIndex])
+            };
         } else {
             console.log(`No choices available for ${typeLabel}`)
         }
     }
-    console.log("Outfit: ", outfit)
+    return outfit; 
 }
+
 
 
 const getImageFromS3 = async (name) => {
